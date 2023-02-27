@@ -1,0 +1,263 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Yakub Assignment
+
+# In[1]:
+
+
+import pandas as pd
+iris=pd.read_csv('iris.csv')
+iris
+
+
+# In[2]:
+
+
+iris.head()
+
+
+# In[3]:
+
+
+iris.tail()
+
+
+# In[4]:
+
+
+iris.shape
+
+
+# In[5]:
+
+
+iris.describe()
+
+
+# In[6]:
+
+
+iris.iloc[0:3,0:2]
+
+
+# In[7]:
+
+
+iris.loc[0:3,('sepal.length','sepal.width')]
+
+
+# In[8]:
+
+
+iris.drop('sepal.length',axis=1)
+
+
+# In[9]:
+
+
+iris.mean()
+
+
+# In[10]:
+
+
+iris.min()
+
+
+# In[11]:
+
+
+iris.max()
+
+
+# In[12]:
+
+
+iris.median()
+
+
+# In[13]:
+
+
+def square(s):
+    return s*2
+
+
+# In[14]:
+
+
+iris[['sepal.length']].apply(square)
+
+
+# In[15]:
+
+
+iris['sepal.length'].value_counts()
+
+
+# In[16]:
+
+
+iris.sort_values(by='sepal.length')
+
+
+# In[19]:
+
+
+iris.info()
+
+
+# In[25]:
+
+
+iris.value_counts("variety")
+
+
+# In[26]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+sns.countplot(x='variety', data=iris, )
+plt.show()
+
+
+# In[31]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+sns.scatterplot(x='sepal.length', y='sepal.width',
+hue='variety', data=iris, )
+
+
+plt.legend(bbox_to_anchor=(1, 1), loc=2)
+
+plt.show()
+
+
+# In[32]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+sns.scatterplot(x='petal.length', y='petal.width',
+hue='variety', data=iris, )
+
+plt.legend(bbox_to_anchor=(1, 1), loc=2)
+
+plt.show()
+
+
+# In[45]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+sns.pairplot(iris.drop(['sepal.length'], axis = 1),
+hue='variety', height=2)
+
+
+# In[36]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+fig, axes = plt.subplots(2, 2, figsize=(10,10))
+
+axes[0,0].set_title("sepal.length")
+axes[0,0].hist(iris['sepal.length'], bins=7)
+
+axes[0,1].set_title("sepal.width")
+axes[0,1].hist(iris['sepal.width'], bins=5);
+
+axes[1,0].set_title("petal.length")
+axes[1,0].hist(iris['petal.length'], bins=6);
+
+axes[1,1].set_title("petal.width")
+axes[1,1].hist(iris['petal.width'], bins=6);
+
+
+# In[39]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plot = sns.FacetGrid(iris, hue="variety")
+plot.map(sns.distplot, "sepal.length").add_legend()
+
+plot = sns.FacetGrid(iris, hue="variety")
+plot.map(sns.distplot, "sepal.width").add_legend()
+
+plot = sns.FacetGrid(iris, hue="variety")
+plot.map(sns.distplot, "petal.length").add_legend()
+
+plot = sns.FacetGrid(iris, hue="variety")
+plot.map(sns.distplot, "petal.width").add_legend()
+
+plt.show()
+
+
+# In[41]:
+
+
+iris.corr(method='pearson')
+
+
+# In[48]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def graph(y):
+    sns.boxplot(x="variety", y=y, data=iris)
+
+plt.figure(figsize=(10,10))
+
+plt.subplot(221)
+graph('sepal.length')
+
+plt.subplot(222)
+graph('sepal.width')
+
+plt.subplot(223)
+graph('petal.length')
+
+plt.subplot(224)
+graph('petal.width')
+
+plt.show()
+
+
+# In[49]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.boxplot(x='sepal.width', data=iris)
+
+
+# In[51]:
+
+
+import plotly.express as px
+
+fig = px.line(iris, y="sepal.width", line_dash='variety',
+color='variety')
+
+fig.show()
+
